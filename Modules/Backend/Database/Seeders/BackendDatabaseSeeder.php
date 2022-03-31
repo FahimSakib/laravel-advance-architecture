@@ -17,5 +17,6 @@ class BackendDatabaseSeeder extends Seeder
         Model::unguard();
 
         // $this->call("OthersTableSeeder");
+        \Modules\Backend\Entities\Post::factory(20)->create();
     }
 }

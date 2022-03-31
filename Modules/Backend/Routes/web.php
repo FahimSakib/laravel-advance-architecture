@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +16,7 @@
 Route::prefix('backend')->group(function() {
     Route::get('/', 'BackendController@index');
 });
+
+Route::get('post','PostController@index')->name('post');
+Route::get('post/create','PostController@create')->name('post.create');
+Route::post('post/store','PostController@store')->name('post.store');
