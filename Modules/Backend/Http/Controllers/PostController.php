@@ -5,20 +5,19 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Backend\Contracts\PostContract;
-use Modules\Backend\Entities\Post;
 use Modules\Backend\Http\Requests\PostRequest;
+use Modules\Backend\Services\PostServices;
 
 class PostController extends Controller
 {
     protected $post;
 
-    public function __construct(PostContract $post)
+    public function __construct(PostServices $post)
     {
         $this->post = $post;
     }
 
-
+   
 
     /**
      * Display a listing of the resource.
@@ -26,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->post->all();
+        $posts = $this->post->index();
         return view('backend::index',compact('posts'));
     }
 
@@ -46,14 +45,14 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $collection = collect($request->all())->only(['title','description']);
+       
         // dd($collection->all());
-        $result = $this->post->store($collection->all());
+        $result = $this->post->store($request);
         
         if($result){
-            return back()->with('success','data Saved successfully');
+            return redirect('post')->with('success','data Saved successfully');
         }else{
-            return back()->with('error','data can not save');
+            return redirect('post')->with('error','data can not save');
         }
     }
 
