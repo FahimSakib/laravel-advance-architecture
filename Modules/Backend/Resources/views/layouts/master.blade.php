@@ -7,13 +7,16 @@
         <title>Module Backend</title>
 
        {{-- Laravel Mix - CSS File --}}
-       {{-- <link rel="stylesheet" href="{{ mix('css/backend.css') }}"> --}}
+       <link rel="stylesheet" href="{{ mix('css/backend.css') }}">
 
     </head>
     <body>
         @yield('content')
 
         {{-- Laravel Mix - JS File --}}
-        {{-- <script src="{{ mix('js/backend.js') }}"></script> --}}
+        <script src="{{ mix('js/backend.js') }}"></script>
+        <script>
+            alert('hello');
+        </script>
     </body>
 </html>
