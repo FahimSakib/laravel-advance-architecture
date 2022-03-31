@@ -5,18 +5,28 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Backend\Contracts\PostContract;
 use Modules\Backend\Entities\Post;
 use Modules\Backend\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
+    protected $post;
+
+    public function __construct(PostContract $post)
+    {
+        $this->post = $post;
+    }
+
+
+
     /**
      * Display a listing of the resource.
      * @return Renderable
      */
     public function index()
     {
-        $posts = Post::orderBy('id','desc')->paginate(10);
+        $posts = $this->post->all();
         return view('backend::index',compact('posts'));
     }
 
@@ -38,7 +48,7 @@ class PostController extends Controller
     {
         $collection = collect($request->all())->only(['title','description']);
         // dd($collection->all());
-        $result = Post::create($collection->all());
+        $result = $this->post->store($collection->all());
         
         if($result){
             return back()->with('success','data Saved successfully');
